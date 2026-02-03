@@ -201,9 +201,7 @@ h2 {
         <p class="username">@FPS</p>
 
         <p class="bio">
-            The Faith Folder <br>
-            The Faith Trends <br>
-            Faith Breakdown <br>
+            Faith and media, together in one path.<br>
             📊 positive.truthful.uplifting 
         </p>
 
@@ -221,6 +219,10 @@ h2 {
                 <p>Following</p>
             </div>
         </div>
+
+        <p class="bio" style="margin-bottom: 15px; font-style: italic; color: #666; font-size: 13px;">
+            Connect with us on your favorite platform
+        </p>
 
         <div class="links">
     <a href="https://instagram.com/faithfulpathstudio" class="btn" target="_blank">
@@ -243,10 +245,18 @@ h2 {
         <i class="fa-brands fa-facebook"></i> Facebook
     </a>
 
+    <a href="whatsapp.com/channel/0029VbBsPpdAInPmTdSpTj1s" class="btn" target="_blank">
+        <i class="fa-brands fa-whatsapp"></i> WhatsApp
+    </a>
+
+    <a href="snapchat.com/add/fpathstudios?share_id=1qZY_FbBSfQ&locale=en-GB" class="btn" target="_blank">
+        <i class="fa-brands fa-snapchat"></i> Snapchat
+    </a>
+
     <button class="btn follow" id="followBtn">Follow</button>
 </div>
 
-        <p class="footer">© 2026 FPS • All Rights Reserved</p>
+        <p class="footer">© 2026 Jason • All Rights Reserved</p>
 
     </div>
 </div>
@@ -257,6 +267,8 @@ h2 {
 ===================== */
 const followBtn = document.getElementById("followBtn");
 const followers = document.getElementById("followers");
+const posts = document.getElementById("posts");
+const following = document.getElementById("following");
 
 let isFollowing = false;
 let followerCount = 2000;
@@ -267,6 +279,38 @@ function formatFollowers(count) {
     }
     return count;
 }
+
+// Animate stats on page load
+function animateStats() {
+    const duration = 2000; // 2 seconds
+    const startTime = Date.now();
+
+    const stats = [
+        { element: posts, target: 25 },
+        { element: followers, target: 2000, formatter: formatFollowers },
+        { element: following, target: 24 }
+    ];
+
+    function updateCounts() {
+        const elapsed = Date.now() - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+
+        stats.forEach(stat => {
+            const currentCount = Math.floor(stat.target * progress);
+            const formatter = stat.formatter || ((count) => count);
+            stat.element.textContent = formatter(currentCount);
+        });
+
+        if (progress < 1) {
+            requestAnimationFrame(updateCounts);
+        }
+    }
+
+    requestAnimationFrame(updateCounts);
+}
+
+// Run animation when page loads
+window.addEventListener("load", animateStats);
 
 followBtn.addEventListener("click", () => {
     isFollowing = !isFollowing;
@@ -288,5 +332,4 @@ followBtn.addEventListener("click", () => {
 </script>
 
 </body>
-
 </html>
